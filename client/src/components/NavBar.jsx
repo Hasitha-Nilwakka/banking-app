@@ -3,16 +3,12 @@ import bankLogo from '@assets/bank-logo.png'
 import menuIcon from '@assets/menu.svg'
 import Button from '@components/ui/Button'
 import MobileNav from '@components/MobileNav'
-import { useState } from 'react'
-import theme from '@/constants/theme'
-import { useCallback } from 'react'
+import { useState, useCallback } from 'react'
+import navStyles from '@/utils/navStyles'
 
 export default function NavBar() {
-    const [isMenueOpen, setIsMenueOpen] = useState(false)
-    const style = useCallback(({isActive}) => ({
-                    color : isActive ? theme.colors.primaryColor : theme.colors.secondaryColor,
-                    fontWeight : isActive ? 'bold' : 'normal'
-                }),[])
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const style = navStyles
     return (
         <div 
             className='
@@ -32,9 +28,13 @@ export default function NavBar() {
                     style={style}
                     >Home</NavLink>
                 <NavLink 
-                    to={'/about'}
+                    to={'/accounts'}
                     style={style}
-                    >About</NavLink>
+                    >Accounts</NavLink>
+                <NavLink 
+                    to={'/loans'}
+                    style={style}
+                    >Loans</NavLink>
                 <NavLink 
                     to={'/contact'}
                     style={style}
@@ -43,13 +43,13 @@ export default function NavBar() {
             <div className='flex gap-3 w-fit h-fit items-center'>
                 <Button variant = 'primary' size = 'md'>Login</Button>
                 <div className='md:hidden border-2 border-primary-700 p-1.5 rounded-md cursor-pointer hover:translate-y-0.5'
-                    onClick={() => setIsMenueOpen(h => !h)}
+                    onClick={() => setIsMenuOpen(h => !h)}
                 >
                     <img 
                         src={menuIcon} 
                         alt="menu icon"/>
                 </div>
-                <MobileNav onClick={() => setIsMenueOpen(h => !h)} isOpen={isMenueOpen} />
+                <MobileNav onClick={() => setIsMenuOpen(h => !h)} isOpen={isMenuOpen} />
             </div>
             </div>
         </div> 
