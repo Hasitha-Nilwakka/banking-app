@@ -4,7 +4,7 @@ import { PublicRoutes } from '@routes'
 function App() {
 
   return (
-    <div>
+    <div className='subpixel-antialiased'>
         <PublicRoutes />     
     </div>
   )

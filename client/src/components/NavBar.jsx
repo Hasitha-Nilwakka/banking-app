@@ -1,14 +1,15 @@
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import bankLogo from '@assets/bank-logo.png'
 import menuIcon from '@assets/menu.svg'
 import Button from '@components/ui/Button'
 import MobileNav from '@components/MobileNav'
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import navStyles from '@/utils/navStyles'
 
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const style = navStyles
+    const navigate = useNavigate()
     return (
         <div 
             className='
@@ -19,9 +20,11 @@ export default function NavBar() {
         >
             <img 
                 src={bankLogo} 
-                alt='premium bank logo' 
+                alt='premium bank logo'
+                onClick={() => navigate('/')} 
+                className='hover:cursor-pointer'
             />
-            <div className='flex gap-5 items-end'>
+            <div className='flex gap-5 items-center'>
                 <div className='hidden md:flex gap-5 text-xl'>
                 <NavLink 
                     to={'/'}

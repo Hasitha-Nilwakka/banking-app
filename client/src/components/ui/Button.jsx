@@ -16,7 +16,7 @@ export default function Button({variant = 'primary', size = 'md', disabled, type
                     'bg-success-500 hover:bg-success-600 text-amber-50 active:bg-success-700 focus-visible:ring-success-500' : variant === 'success',
                     'bg-neutral-500 hover:bg-neutral-600 text-black active:bg-neutral-700 focus-visible:ring-neutral-500  ' : variant === 'neutral',
                     'text-3xl py-3 px-6 rounded-full' : size === 'xl',
-                    'text-2xl py-2.5 px-5 rounded-xl' : size === 'lg',
+                    'text-lg py-2.5 px-5 rounded-xl' : size === 'lg',
                     'text-base py-2 px-4 rounded-lg' : size === 'md',
                     'text-sm py-1.5 px-3 rounded-md' : size === 'sm',
                 }
