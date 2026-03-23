@@ -1,25 +1,22 @@
-import { useEffect } from "react"
+import { useMemo } from "react";
 import { useState, forwardRef } from "react"
 
-export const LoanCalculator = forwardRef((props, ref) => {
-    const loanRate = 10
+const loanRate = 10
+
+function calculateLoanInstallement(amount, months) {
+        const monthlyRate = loanRate / 12 / 100
+        const emi = amount * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+        return emi
+}
+
+const LoanCalculator = forwardRef((props, ref) => {
     const [inputValue, setInputValue] = useState({loanAmount : 0, loanPeriod : 6})
-    const [installement, setInstallement] = useState(0)
+    const installment = useMemo(() => calculateLoanInstallement(inputValue.loanAmount, inputValue.loanPeriod), [inputValue.loanAmount, inputValue.loanPeriod])
     function updateInput(e) {
         const target = e.target.id
         const value = e.target.value
         setInputValue(prevValue => ({...prevValue, [target] : value}))
     }
-
-    function calculateLoanInstallement(amount, months) {
-        const monthlyRate = loanRate / 12 / 100
-        const emi = amount * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
-        setInstallement(emi)
-    }
-
-    useEffect(() => {
-        calculateLoanInstallement(inputValue.loanAmount, inputValue.loanPeriod)
-    }, [inputValue])
     return (
         <div 
             className="flex flex-col items-center py-5" 
@@ -52,7 +49,7 @@ export const LoanCalculator = forwardRef((props, ref) => {
                     <option value="72">72</option>
                 </select>
                 <label className="font-semibold">Loan installement</label>
-                <p className="font-semibold px-1 text-success-700">{installement.toFixed(2)}</p>
+                <p className="font-semibold px-1 text-success-700">{installment.toFixed(2)}</p>
             </div>
         </div>
     )

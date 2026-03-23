@@ -1,49 +1,73 @@
 import Button from "@/components/ui/Button"
-import { useState } from "react"
-import { forwardRef } from "react"
+import { forwardRef, useReducer } from "react"
+import { validateIdNo, validateEmail, validatePhoneNo, inputObj, validate} from "@/utils/loanApplication"
+import { useEffect } from "react"
 
-const inputStyle = 'border rounded-md pl-2 py-0.5'
+const inputStyle = 'border rounded-md pl-2 py-0.5 w-full'
 
-export const LoanApplicationForm = forwardRef((props, ref) => {
-    const [inputValue, setInputValue] = useState({
-        firstName : '',
-        lastName : '',
-        idNo : '',
-        dob : '',
-        email: '',
-        phone: '',
-        amount: '',
-        period : '',
-        purpose : '',
-        emStatus : '',
-        emType : '',
-        expenses : '',
-        income : '',
-        concent : false
-    })
+const reducer = (state, action) => {
+    switch(action.type) {
+        case 'UPDATE_FIELD' :{
+            return {
+                ...state,
+                [action.target] : action.value
+            }}
+        case 'VALIDATE':{
+            const errors = {}
+            Object.keys(state.errors).forEach((key) => {
+                const value = state[key]
+                if (typeof value === 'string') {
+                    if (key === 'idNo') {
+                        const errMsg = validateIdNo(value)
+                        errors[key] = {
+                            error : errMsg !== '' ? true : false,
+                            errMsg : errMsg}
+                    } else if (key === 'email') {
+                        const errMsg = validateEmail(value)
+                        errors[key] = {
+                            error : errMsg !== '' ? true : false,
+                            errMsg : errMsg}
+                    }else if (key === 'phone') {
+                        const errMsg = validatePhoneNo(value)
+                        errors[key] = {
+                            error : errMsg !== '' ? true : false,
+                            errMsg : errMsg}
+                    }else {
+                        errors[key] = value.trim() === ''
+                    }
+                } else if (typeof value === 'number') {
+                    errors[key] = value === 0
+                } else if (typeof value === 'boolean') {
+                    errors[key] = !value
+                }
+            })
 
-    const [errors, setErros] = useState({
-        firstName : false,
-        lastName : false,
-        idNo : false,
-        dob : false,
-        email: false,
-        phone: false,
-        amount: false,
-        period : false,
-        purpose : false,
-        emStatus : false,
-        emType : false,
-        expenses : false,
-        income : false,
-        concent : false
-    })
-
-    function updateInputValues(e) {
-        const target = e.target.id 
-        const value = e.target.value
-        setInputValue(prevVals => ({prevVals, [target] : value}))
+            return {
+                ...state,
+                errors
+            }}
+        default :
+        return state
     }
+}
+
+
+const LoanApplicationForm = forwardRef((props, ref) => {
+    const [inputValue, dispatch] = useReducer(reducer, inputObj)
+
+    const updateInputValues = (e) => {
+        dispatch({type: 'UPDATE_FIELD', target : e.target.id, value : e.target.type === 'checkbox' ? e.target.checked : e.target.value})
+    }
+
+    const validateInput = () => {
+        dispatch({type : 'VALIDATE'})    
+    }
+
+    useEffect(() => {
+        const isValidate = validate(inputValue)
+        if (isValidate) console.log('validated')
+    }, [inputValue.errors])
+
     return (
         <div className="flex flex-col gap-5 items-center py-5" tabIndex={-1} ref={ref}>
             <div className="bg-primary-500 w-full text-center py-4 text-xl text-neutral-50 font-bold">
@@ -57,44 +81,44 @@ export const LoanApplicationForm = forwardRef((props, ref) => {
                     id="firstName" 
                     className={inputStyle} 
                     placeholder="e.g. John"/>
-                    {errors.firstName ? <p className="text-danger-500">* first name is required</p> : null}
+                    {inputValue.errors.firstName ? <p className="text-danger-500">* first name is required</p> : null}
                 </div>
                 
 
                 <label htmlFor="lastName">Last Name</label>
                 <div>
                     <input type="text" value={inputValue.lastName} onChange={(e) => updateInputValues(e)} id="lastName" placeholder="e.g. Doe" className={inputStyle}/>
-                    {errors.lastName ? <p className="text-danger-500">* last name is required</p> : null}
+                    {inputValue.errors.lastName ? <p className="text-danger-500">* last name is required</p> : null}
                 </div>
 
                 <label htmlFor="idNo">Identification Number</label>
                 <div>
-                    <input type="text" value={inputValue.idNo} onChange={(e) => updateInputValues(e)} id="idNo" placeholder="e.g. 120585-222A" className={inputStyle}/>
-                    {errors.idNo ? <p className="text-danger-500">* identification no is required</p> : null}
+                    <input type="text" maxLength={11} value={inputValue.idNo} onChange={(e) => updateInputValues(e)} id="idNo" placeholder="e.g. 120585-222A" className={inputStyle}/>
+                    {inputValue.errors.idNo.error ? <p className="text-danger-500">{inputValue.errors.idNo.errMsg}</p> : null}
                 </div>
 
                 <label htmlFor="dob">Date of Birth</label>
                 <div>
                 <input type="date" value={inputValue.dob} onChange={(e) => updateInputValues(e)} id="dob" className={inputStyle}/>
-                    {errors.dob ? <p className="text-danger-500">* date of birth is required</p> : null}
+                    {inputValue.errors.dob ? <p className="text-danger-500">* date of birth is required</p> : null}
                 </div>
 
                 <label htmlFor="email">Email</label>
                 <div>
-                    <input type="text" value={inputValue.email} onChange={(e) => updateInputValues(e)} id="email" placeholder="e.g. john.doe@abc.com" className={inputStyle}/>
-                    {errors.email ? <p className="text-danger-500">* email is required</p> : null}
+                    <input type="email" value={inputValue.email} onChange={(e) => updateInputValues(e)} id="email" placeholder="e.g. john.doe@abc.com" className={inputStyle}/>
+                    {inputValue.errors.email.error ? <p className="text-danger-500">{inputValue.errors.email.errMsg}</p> : null}
                 </div>
 
                 <label htmlFor="phone">Phone No</label>
                 <div>
-                    <input type="number" value={inputValue.phone} onChange={(e) => updateInputValues(e)} id="phone" maxLength='10' placeholder="e.g. 0421581445" className={inputStyle}/>
-                    {errors.phone ? <p className="text-danger-500">* phone no is required</p> : null}
+                    <input type="tel" value={inputValue.phone} onChange={(e) => updateInputValues(e)} id="phone" maxLength='10' placeholder="e.g. 0421581445" className={inputStyle}/>
+                    {inputValue.errors.phone.error ? <p className="text-danger-500">{inputValue.errors.phone.errMsg}</p> : null}
                 </div>
 
                 <label htmlFor="amount">Loan Amount €</label>
                 <div>
                     <input type="number" value={inputValue.amount} onChange={(e) => updateInputValues(e)} id="amount" placeholder="e.g. 25000" className={inputStyle}/>
-                    {errors.amount ? <p className="text-danger-500">* loan amount is required</p> : null}
+                    {inputValue.errors.amount ? <p className="text-danger-500">* loan amount is required</p> : null}
                 </div>
 
                 <label htmlFor="period">Loan Period (Months)</label>
@@ -109,7 +133,7 @@ export const LoanApplicationForm = forwardRef((props, ref) => {
                         <option value="60">60</option>
                         <option value="72">72</option>
                     </select>
-                    {errors.period ? <p className="text-danger-500">* loan period is required</p> : null}
+                    {inputValue.errors.period ? <p className="text-danger-500">* loan period is required</p> : null}
                 </div>
 
                 <label htmlFor="purpose">Loan Purpose</label>
@@ -123,7 +147,7 @@ export const LoanApplicationForm = forwardRef((props, ref) => {
                         <option value="study">Study</option>
                         <option value="other">Other</option>
                     </select>
-                    {errors.purpose ? <p className="text-danger-500">* loan purpose is required</p> : null}
+                    {inputValue.errors.purpose ? <p className="text-danger-500">* loan purpose is required</p> : null}
                 </div>
 
                 <label htmlFor="emStatus">Employment Status</label>
@@ -134,38 +158,38 @@ export const LoanApplicationForm = forwardRef((props, ref) => {
                         <option value="self-employed">Self-Employed</option>
                         <option value="student">Student</option>
                     </select>
-                    {errors.emStatus ? <p className="text-danger-500">* employement status is required</p> : null}
+                    {inputValue.errors.emStatus ? <p className="text-danger-500">* employement status is required</p> : null}
                 </div>
 
                 <label htmlFor="emType">Employment Type</label>
                 <div>
                     <select id="emType" value={inputValue.emType} onChange={(e) => updateInputValues(e)} className={inputStyle}>
                         <option value="0">Select Type</option>
-                        <option value="permanant">Permanant</option>
+                        <option value="permanent">Permanent</option>
                         <option value="fixed">Fixed-Term</option>
                     </select>
-                    {errors.emType ? <p className="text-danger-500">* employement type is required</p> : null}
+                    {inputValue.errors.emType ? <p className="text-danger-500">* employement type is required</p> : null}
                 </div>
 
                 <label htmlFor="income">Monthly Gross Income €</label>
                 <div>
-                    <input type="text" id="income" value={inputValue.income} onChange={(e) => updateInputValues(e)} placeholder="e.g. 4000" className={inputStyle}/>
-                    {errors.income ? <p className="text-danger-500">* income is required</p> : null}
+                    <input type="number" id="income" value={inputValue.income} onChange={(e) => updateInputValues(e)} placeholder="e.g. 4000" className={inputStyle}/>
+                    {inputValue.errors.income ? <p className="text-danger-500">* income is required</p> : null}
                 </div>
 
                 <label htmlFor="expenses">Monthly Expenditures €</label>
                 <div>
-                    <input type="text" id="expenses" value={inputValue.expenses} onChange={(e) => updateInputValues(e)} placeholder="e.g. 1200" className={inputStyle}/>
-                    {errors.expenses ? <p className="text-danger-500">* expenses is required</p> : null}
+                    <input type="number" id="expenses" value={inputValue.expenses} onChange={(e) => updateInputValues(e)} placeholder="e.g. 1200" className={inputStyle}/>
+                    {inputValue.errors.expenses ? <p className="text-danger-500">* expenses is required</p> : null}
                 </div>
             </div>
             <div className="flex gap-2 text-primary-700">
-                <input type="checkbox" id="concent" value={inputValue.concent} onChange={(e) => updateInputValues(e)}/>
+                <input type="checkbox" id="concent" checked={inputValue.concent} onChange={(e) => updateInputValues(e)}/>
                 <label htmlFor="concent">I consent to checking my credit information</label>
-                {errors.concent ? <p className="text-danger-500">* please accept the consent for credit check</p> : null}
+                {inputValue.errors.concent ? <p className="text-danger-500">* please accept the consent for credit check</p> : null}
             </div>
             <div>
-                <Button variant='success' disabled={false}>Apply Now</Button>
+                <Button variant='success' onClick={validateInput}>Apply Now</Button>
             </div>
         </div>
     )}
