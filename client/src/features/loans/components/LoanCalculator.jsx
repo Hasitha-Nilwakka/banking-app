@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useState, forwardRef } from "react"
 
-const loanRate = 10
+const loanRate = 4.5
 
 function calculateLoanInstallement(amount, months) {
         const monthlyRate = loanRate / 12 / 100

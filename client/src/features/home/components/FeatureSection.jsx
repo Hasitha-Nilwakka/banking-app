@@ -1,4 +1,4 @@
-import FeatureCard from "@/components/ui/FeatureCard"
+import FeatureCard from "@/features/home/components/FeatureCard"
 import { forwardRef } from "react"
 
 const FeatureSection = forwardRef((props, ref) => (
