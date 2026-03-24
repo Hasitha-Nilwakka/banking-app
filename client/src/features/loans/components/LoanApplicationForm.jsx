@@ -1,6 +1,7 @@
 import Button from "@/components/ui/Button"
 import { forwardRef, useReducer } from "react"
-import { validateIdNo, validateEmail, validatePhoneNo, inputObj, validate} from "@/utils/loanApplication"
+import { inputObj, validate} from "@/utils/loanApplication"
+import { validateIdNo, validateEmail, validatePhoneNo} from "@/utils/formFieldValidation"
 import { useEffect } from "react"
 
 const inputStyle = 'border rounded-md pl-2 py-0.5 w-full'

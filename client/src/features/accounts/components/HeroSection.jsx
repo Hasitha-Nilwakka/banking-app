@@ -1,7 +1,7 @@
 import acountsHeroImage from '@assets/accounts-hero.jpg'
 import Button from '@/components/ui/Button'
 
-export default function HeroSection() {
+export default function HeroSection({featureFocus, accFocus}) {
     return (
         <div className='shadow-sm md:flex'>
                     <div>
@@ -22,8 +22,8 @@ export default function HeroSection() {
                             className='text-lg text-secondary-700 lg:text-2xl'
                         >We offer accounts matching all your needs. Savings, Current and Premium accounts offer a wide range of benefits. Our cutting edge technology ensures the safty of your money with us.</p>
                         <div className='flex gap-2'>
-                            <Button variant='accent' size='lg'>Learn More</Button>
-                            <Button size='lg'>Open Account</Button>
+                            <Button variant='accent' size='lg' onClick={featureFocus}>Learn More</Button>
+                            <Button size='lg' onClick={accFocus}>Open Account</Button>
                         </div>
                     </div>
         </div>

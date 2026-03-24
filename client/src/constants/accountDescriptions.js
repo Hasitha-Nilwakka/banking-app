@@ -5,6 +5,7 @@ import premiumAccIcon from '@assets/premium-acc-ico.png'
 const accountsWebPage = [
     {
         name : 'Savings Account',
+        varName : 'savings',
         image : savingsAccIcon,
         alt : 'illustration of a piggy bank',
         shortDescription : 'Grow your money safely over time with competitive interest rates and easy access whenever you need it. Ideal for building financial security and reaching long-term goals.',
@@ -19,6 +20,7 @@ const accountsWebPage = [
     },
     {
         name : 'Current Account',
+        varName : 'current',
         image : checkingAccIcon,
         alt : 'illustration of calculator and documents',
         shortDescription : 'Manage everyday spending with ease, including payments, transfers, and direct debits. Designed for convenient, flexible access to your money anytime.',
@@ -33,6 +35,7 @@ const accountsWebPage = [
     },
     {
         name : 'Premium Account',
+        varName : 'premium',
         image : premiumAccIcon,
         alt : 'illustration of a dollar mark and shaking hands',
         shortDescription : 'Enjoy enhanced banking benefits such as higher limits, exclusive perks, and priority support. Perfect for customers looking for a more tailored, premium financial experience.',

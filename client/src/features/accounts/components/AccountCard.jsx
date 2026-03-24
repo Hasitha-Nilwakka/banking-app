@@ -1,13 +1,21 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { AccContext } from "@/pages/public/AccountsPage"
+import Button from "@/components/ui/Button"
 
-export default function FeatureCard({img, alt, name, text, features}) {
+export default function AccountCard({img, alt, name, text, features, varName}) {
     const [hidden, setHidden] = useState(true)
+    const {selectAccount, focusAccRef} = useContext(AccContext)
 
     function flipHidden() {
         setHidden(h => !h)
     }
+
+    function handleClick(name) {
+        selectAccount(name)
+        focusAccRef()
+    }
     return (
-        <div className="flex flex-col items-center p-8 rounded-2xl shadow-xl gap-2 w-[70vw]">
+        <div className="flex flex-col items-center p-8 rounded-2xl shadow-xl gap-4 w-[70vw]">
             <div>
                 <h2 className="text-accent-700 text-2xl font-bold">{name}</h2>
             </div>
@@ -26,6 +34,7 @@ export default function FeatureCard({img, alt, name, text, features}) {
                 })}
                 <p className="text-secondary-500 text-md italic hover:cursor-pointer" onClick={flipHidden} aria-label="Click here to fold the benefits list">See Less ↑</p>
             </div>
+            <Button onClick={() => handleClick(varName)}>{`Open ${name}`}</Button>
         </div>
     )
 }
