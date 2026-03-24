@@ -15,7 +15,11 @@ export default function AccountCard({img, alt, name, text, features, varName}) {
         focusAccRef()
     }
     return (
-        <div className="flex flex-col items-center p-8 rounded-2xl shadow-xl gap-4 w-[70vw]">
+        <div 
+            className="
+                flex flex-col items-center p-8 rounded-2xl shadow-xl gap-4 w-[70vw]
+                md:w-[60vw]
+                lg:w-[30vw]">
             <div>
                 <h2 className="text-accent-700 text-2xl font-bold">{name}</h2>
             </div>

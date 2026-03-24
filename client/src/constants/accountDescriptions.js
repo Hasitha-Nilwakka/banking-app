@@ -8,7 +8,7 @@ const accountsWebPage = [
         varName : 'savings',
         image : savingsAccIcon,
         alt : 'illustration of a piggy bank',
-        shortDescription : 'Grow your money safely over time with competitive interest rates and easy access whenever you need it. Ideal for building financial security and reaching long-term goals.',
+        shortDescription : 'Grow your money over time with competitive interest rates and easy access whenever you need it. Ideal for building financial security and reaching long-term goals.',
         featureList : ['Earn competitive interest',
                         'Save with flexible deposits',
                         'Access funds anytime',

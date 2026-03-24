@@ -1,7 +1,7 @@
 import Button from "@/components/ui/Button"
 import { forwardRef, useReducer } from "react"
-import { inputObj, validate} from "@/utils/loanApplication"
-import { validateIdNo, validateEmail, validatePhoneNo} from "@/utils/formFieldValidation"
+import { inputObj} from "@/utils/loanApplication"
+import { validateTwoObjects, allFieldsValidated} from "@/utils/formFieldValidation"
 import { useEffect } from "react"
 
 const inputStyle = 'border rounded-md pl-2 py-0.5 w-full'
@@ -14,35 +14,7 @@ const reducer = (state, action) => {
                 [action.target] : action.value
             }}
         case 'VALIDATE':{
-            const errors = {}
-            Object.keys(state.errors).forEach((key) => {
-                const value = state[key]
-                if (typeof value === 'string') {
-                    if (key === 'idNo') {
-                        const errMsg = validateIdNo(value)
-                        errors[key] = {
-                            error : errMsg !== '' ? true : false,
-                            errMsg : errMsg}
-                    } else if (key === 'email') {
-                        const errMsg = validateEmail(value)
-                        errors[key] = {
-                            error : errMsg !== '' ? true : false,
-                            errMsg : errMsg}
-                    }else if (key === 'phone') {
-                        const errMsg = validatePhoneNo(value)
-                        errors[key] = {
-                            error : errMsg !== '' ? true : false,
-                            errMsg : errMsg}
-                    }else {
-                        errors[key] = value.trim() === ''
-                    }
-                } else if (typeof value === 'number') {
-                    errors[key] = value === 0
-                } else if (typeof value === 'boolean') {
-                    errors[key] = !value
-                }
-            })
-
+            const errors = validateTwoObjects(state.errors, state)
             return {
                 ...state,
                 errors
@@ -65,7 +37,7 @@ const LoanApplicationForm = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        const isValidate = validate(inputValue)
+        const isValidate = allFieldsValidated(inputValue)
         if (isValidate) console.log('validated')
     }, [inputValue.errors])
 
@@ -100,7 +72,7 @@ const LoanApplicationForm = forwardRef((props, ref) => {
 
                 <label htmlFor="dob">Date of Birth</label>
                 <div>
-                <input type="date" value={inputValue.dob} onChange={(e) => updateInputValues(e)} id="dob" className={inputStyle}/>
+                    <input type="date" value={inputValue.dob} onChange={(e) => updateInputValues(e)} id="dob" className={inputStyle}/>
                     {inputValue.errors.dob ? <p className="text-danger-500">* date of birth is required</p> : null}
                 </div>
 

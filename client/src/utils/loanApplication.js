@@ -41,14 +41,4 @@ const inputObj = {
     isValidated : false
 }
 
-function validate(obj) {
-  return Object.keys(obj.errors).every(key => {
-        if (key === 'idNo' || key === 'email' || key === 'phone') {
-            return !obj.errors[key].error
-        } else {
-            return !obj.errors[key]
-        }
-    })
-} 
-
-export {inputObj, validate}
+export {inputObj}
