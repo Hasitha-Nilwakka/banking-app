@@ -9,7 +9,7 @@ import { Route, Routes } from "react-router-dom"
 function App() {
 
   return (
-    <div className="text-pretty 2xl:w-[80vw] 2xl:flex 2xl:flex-col 2xl:justify-self-center">
+    <div className="text-pretty flex flex-col 2xl:max-w-[60%] 2xl:mx-auto">
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />}/>

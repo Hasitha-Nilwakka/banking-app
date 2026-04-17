@@ -1,5 +1,6 @@
 import Calculator from "./Calculator"
 import LoanForm from "./LoanForm"
+import LoanDetailCard from "./LoanDetailCard.tsx"
 import heroDesktop from '../../assets/Loan-hero-desktop.png'
 import heroTab from '../../assets/Loan-hero-tab.png'
 import heroMobile from '../../assets/Loan-hero-mobile.png'
@@ -17,20 +18,27 @@ function LoansPage() {
                     absolute 
                     text-nutral 
                     bottom-0 
-                    p-5 bg-black/50 
+                    p-5 bg-black/60
                     flex flex-col items-start gap-3
                     
                     md:top-0
-                    md:w-[45vw]
+                    md:w-[45%]
                     md:px-8
-                    md:py-6
+                    md:py-10
+                    md:gap-5
                     
-                    lg:w-[50vw]
+                    lg:w-[50%]
                     lg:top-0
                     lg:gap-5
-                    lg:py-10">
-                    <h1 className="text-5xl font-semibold lg:text-8xl">Loans Tailored to Your Ambitions</h1>
-                    <p className="text-2xl lg:text-4xl">From personal goals to major investments, Premium Bank offers smart, flexible lending solutions built around you.</p>
+                    lg:py-10
+                    
+                    xl:gap-10
+                    xl:pt-20
+
+                    2xl:pt-15
+                    ">
+                    <h1 className="text-4xl font-semibold lg:text-5xl">Loans Tailored to Your Ambitions</h1>
+                    <p className="text-xl lg:text-4xl">From personal goals to major investments, Premium Bank offers smart, flexible lending solutions built around you.</p>
                     <button 
                         className='bg-secondary 
                                     py-2 px-5 mt-2 rounded-lg
@@ -40,6 +48,7 @@ function LoansPage() {
                 </div>
             </div>
             <Calculator />
+            <LoanDetailCard />
             <LoanForm />
             
         </div>

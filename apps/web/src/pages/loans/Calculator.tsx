@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from "react"
-import loanCalc from '../../assets/loanCalc.png'
 
 interface CalculatorInput {
     loanAmount : number | string,
@@ -18,33 +17,49 @@ export default function Calculator() {
 
     const [monthlyPayment, totalPaid, totalIntPaid] = useMemo(() => calculateMonthlyPayment(Number(inputValue.loanAmount), Number(inputValue.intRate), Number(inputValue.termMonths)), [inputValue.loanAmount, inputValue.intRate, inputValue.termMonths])
     
-    const inputFieldStyle : string = 'bg-white rounded-lg px-2'
+    const inputFieldStyle : string = 'border px-2 text-primary border-primary rounded-lg bg-nutral'
     return (
-        <div className="bg-nutral py-5 md:flex">
-            <div className="md:flex md:flex-col md:items-center md:p-5 md:gap-3">
-                <h2 className="text-3xl text-primary text-center font-semibold">Try Our Loan Calculator</h2>
-                <img src={loanCalc} alt="and image of a person using a calculator" className="hidden md:block"/>
+        <div>
+            <div className="
+                bg-nutral text-center py-8 px-4 text-primary shadow-2xs
+                md:flex
+                md:items-center
+                md:py-10
+                md:px-40">
+                <div>
+                    <h2 className="mb-3 font-semibold text-2xl md:text-4xl md:font-bold">Flexibility starts here</h2>
+                    <p className="text-lg md:text-2xl">Try our loan calculator to find out your monthly installement. You can borrow as little as €1000 and up to millions depending on your need.</p>
+                </div>
             </div>
-            <div className="w-[75vw] flex flex-col justify-self-center p-5 text-primary mt-5 mb-5 bg-nutral shadow-lg rounded-lg md:w-[50vw] lg:w-[35vw]">
-                <div className="grid grid-cols-2 text-lg gap-2 lg:text-xl lg:px-10">
+            <div className="md:flex">
+                <div className="
+                    grid grid-cols-2 px-5 gap-y-0.5
+                    text-primary mt-5 mb-5 text-lg
+                    
+                    md:text-xl md:px-5 md:w-[50%]">
                     <label htmlFor="loanAmount">Loan Amount</label>
                     <input className={inputFieldStyle} type="number" id="loanAmount" value={inputValue.loanAmount} onChange={(e) => handleInputChange(e)}/>
                     <label htmlFor="intRate">Interest Rate</label>
                     <input className={inputFieldStyle} type="number" id="intRate" value={inputValue.intRate} onChange={(e) => handleInputChange(e)}/>
-                    <label htmlFor="termMonths">Loan Term (Months)</label>
+                    <label htmlFor="termMonths">Term (Months)</label>
                     <input className={inputFieldStyle} type="number" id="termMonths" value={inputValue.termMonths} onChange={(e) => handleInputChange(e)} min={6} max={120}/>
                 </div>
-                <div className="flex justify-between mt-5 px-2 text-lg font-semibold lg:text-xl lg:px-17 lg:mt-10 lg:mb-10">
-                    <div className="flex flex-col gap-2 italic">
-                        <label>Monthly installment</label>
-                        <label>Total repayment amount</label>
-                        <label>Total interest paid</label>
-                    </div>
-                    <div className="flex flex-col gap-2 items-end">
+                <div className="
+                        text-lg bg-gray-200 flex flex-col items-center py-5 max-w-[70%] mx-auto gap-2 shadow-xs
+                        md:text-xl md:w-[50%] md:items-stretch">
+                    <div className="flex flex-col items-center md:flex-row md:justify-between md:px-5">
+                        <label className="font-semibold">Monthly installment</label>
                         <p>{`€ ${monthlyPayment}`}</p>
+                    </div>
+                    <div className="flex flex-col items-center md:flex-row md:justify-between md:px-5">
+                        <label className="font-semibold">Total repayment amount</label>
                         <p>{`€ ${totalPaid}`}</p>
+                    </div>
+                    <div className="flex flex-col items-center md:flex-row md:justify-between md:px-5">
+                        <label className="font-semibold">Total interest paid</label>
                         <p>{`€ ${totalIntPaid}`}</p>
                     </div>
+                    
                 </div>
             </div>
         </div>
