@@ -1,4 +1,13 @@
-export default function FeatureIcon({img, alt, title, children}) {
+import type React from "react"
+
+interface FeatureIconProps {
+    img : string,
+    alt: string,
+    title : string,
+    children : React.ReactNode
+}
+
+export default function FeatureIcon({img, alt, title, children} : FeatureIconProps) {
     return (
         <div className="
             w-[75vw] 

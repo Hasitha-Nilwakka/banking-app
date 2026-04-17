@@ -12,6 +12,8 @@ import StatIcon from './StatIcon'
 import { Link } from 'react-router-dom'
 
 function HomePage() {
+    const secondaryImageBtnStyle : string = 'bg-secondary py-2 px-5 font-bold text-xl mt-5 rounded-lg lg:text-2xl lg:mt-10 lg:py-4 lg:px-8'
+    const actionLinkStyle : string = 'bg-nutral cursor-pointer text-primary py-2 px-10 text-lg hover:shadow-lg hover:text-xl transition lg:text-2xl lg:hover:text-2xl lg:hover:translate-y-2'
     return (
         <div>
             <div>
@@ -29,7 +31,7 @@ function HomePage() {
                         flex
                         flex-col
 
-                        top-100
+                        top-110
                         items-start
                         px-10
                         gap-2
@@ -45,7 +47,12 @@ function HomePage() {
                     <p className='text-3xl lg:text-4xl'>Experince the Future of <span className='font-bold'>Banking</span></p>
                     <h1 className='text-5xl font-bold lg:text-8xl'>Smart, Safe & Convienient</h1>
                     <p className='text-2xl lg:text-4xl'>Premium banking services for everyone</p>
-                    <button className='bg-secondary py-2 px-5 mt-2 font-bold text-xl lg:text-2xl lg:mt-5 rounded-lg lg:py-4 lg:px-8'>Learn More</button>
+                    <button 
+                        className='bg-secondary 
+                                    py-2 px-5 mt-2 rounded-lg
+                                    font-bold text-xl 
+                                    lg:text-2xl lg:mt-5 lg:py-4 lg:px-8'
+                        >Learn More</button>
                 </div>
             </div>
             <div className='flex flex-col items-center md:flex-row md:justify-center md:gap-10'>
@@ -62,8 +69,8 @@ function HomePage() {
                     <h2 className='text-3xl font-semibold md:mb-5 lg:text-5xl'>Manage Your Money With Easy</h2>
                     <p className='text-xl font-thin md:font-semibold lg:text-2xl lg:font-bold'>Take full control of your finances with intuitive tools designed for everyday banking, savings, and investing</p>
                     <div className='flex gap-5'>
-                        <button className='bg-secondary py-2 px-5 font-bold text-xl mt-5 rounded-lg lg:text-2xl lg:mt-10 lg:py-4 lg:px-8'>Open Account</button>
-                        <button className='bg-secondary py-2 px-5 font-bold text-xl mt-5 rounded-lg lg:text-2xl lg:mt-10 lg:py-4 lg:px-8'>Apply for a loan</button>
+                        <button className={secondaryImageBtnStyle}>Open Account</button>
+                        <button className={secondaryImageBtnStyle}>Apply for a loan</button>
                     </div>
                 </div>
             </div>
@@ -82,10 +89,10 @@ function HomePage() {
                         flex flex-col gap-2 mt-2 text-center 
                         md:p-10 md:justify-start md:gap-5 md:w-[40vw]
                     '>
-                    <Link to={'/contact'} className='bg-nutral cursor-pointer text-primary py-2 px-10 text-lg hover:shadow-lg hover:text-xl transition lg:text-2xl lg:hover:text-2xl lg:hover:translate-y-2'>Contact Us</Link>
-                    <Link to={'/accounts'} className='bg-nutral cursor-pointer text-primary py-2 px-10 text-lg hover:shadow-lg hover:text-xl transition lg:text-2xl lg:hover:text-2xl lg:hover:translate-y-2'>Open an Account</Link>
-                    <Link to={'/loans'} className='bg-nutral cursor-pointer text-primary py-2 px-10 text-lg hover:shadow-lg hover:text-xl transition lg:text-2xl lg:hover:text-2xl lg:hover:translate-y-2'>Loan Calculator</Link>
-                    <Link to={'/loans'} className='bg-nutral cursor-pointer text-primary py-2 px-10 text-lg hover:shadow-lg hover:text-xl transition lg:text-2xl lg:hover:text-2xl lg:hover:translate-y-2'>Apply For a Loan</Link>
+                    <Link to={'/contact'} className={actionLinkStyle}>Contact Us</Link>
+                    <Link to={'/accounts'} className={actionLinkStyle}>Open an Account</Link>
+                    <Link to={'/loans'} className={actionLinkStyle}>Loan Calculator</Link>
+                    <Link to={'/loans'} className={actionLinkStyle}>Apply For a Loan</Link>
                 </div>
             </div>
         </div>

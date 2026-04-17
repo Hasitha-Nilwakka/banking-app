@@ -1,4 +1,11 @@
-export default function StatIcon({title, children}) {
+import type React from "react"
+
+interface StatIconProps {
+    title : string,
+    children : React.ReactNode
+}
+
+export default function StatIcon({title, children} : StatIconProps) {
     return (
         <div className="
             border-2 shadow-sm shadow-nutral border-nutral text-primary text-center px-5 py-2

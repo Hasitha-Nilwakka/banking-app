@@ -5,7 +5,7 @@ import MobileNavPanel from "./MobileNavPanel"
 import { useState } from "react"
 
 export default function NavBar() {
-    const [isHiddent, setIsHidden] = useState(true)
+    const [isHidden, setIsHidden] = useState(true)
     function hidePannel() {
         setIsHidden(true)
     }
@@ -29,7 +29,7 @@ export default function NavBar() {
             >
                 <img src={hamburg} alt="" />
             </div>
-            {!isHiddent ? <MobileNavPanel hidePanel={hidePannel} isHidden={isHiddent}/> : null}
+            {!isHidden ? <MobileNavPanel hidePanel={hidePannel} isHidden={isHidden}/> : null}
         </div>
     )
 }
